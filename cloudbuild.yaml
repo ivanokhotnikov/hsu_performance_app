@@ -1,0 +1,34 @@
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    id: "build container image"
+    args: ["build", "-t", "gcr.io/hsu-performance/hsu-performance-app", "."]
+  - name: "gcr.io/cloud-builders/docker"
+    id: "push container image to container registry"
+    args: ["push", "gcr.io/hsu-performance/hsu-performance-app"]
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    id: "deploy container image to cloud run"
+    entrypoint: gcloud
+    args:
+      [
+        "run",
+        "deploy",
+        "hsu-performance-app",
+        "--image",
+        "gcr.io/hsu-performance/hsu-performance-app",
+        "--region",
+        "europe-west1",
+        "--cpu",
+        "4",
+        "--memory",
+        "8Gi",
+        "--timeout",
+        "3600",
+        "--allow-unauthenticated",
+        "--platform",
+        "managed",
+        "--port", 
+        "8501"
+      ]
+images:
+  - gcr.io/hsu-performance/hsu-performance-app
+timeout: 3600s
