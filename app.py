@@ -6,7 +6,7 @@ st.set_page_config(page_title='HSU Performance', page_icon='fav.png')
 
 def main():
     st.title('Modeled HSU Performance')
-    with st.sidebar:
+    with st.container():
         st.header('Inputs')
         oil = st.selectbox('Oil', ('SAE 15W40', 'SAE 5W30', 'SAE 30'))
         oil_temp = st.number_input('Oil temperature', 0, 100, 100, 10)
@@ -52,16 +52,16 @@ def main():
                 f"{hsu.efficiencies['hst']['mechanical']:.2f}")
     col3.metric('Total, %', f"{hsu.efficiencies['hst']['total']:.2f}")
     st.header('Leakages')
-    st.subheader('Pump/Motor')
+    st.subheader('Per pump/motor')
     col1, col2, col3, col4 = st.columns(4)
     col1.metric('Block, lpm', f"{hsu.performance['leakage']['block']*6e4:.2f}")
     col2.metric('Shoes, lpm', f"{hsu.performance['leakage']['shoes']*6e4:.2f}")
     col3.metric('Pistons, lpm',
                 f"{hsu.performance['leakage']['pistons']*6e4:.2f}")
     col4.metric('Total, lpm', f"{hsu.performance['leakage']['total']*6e4:.2f}")
-    st.subheader('HSU')
+    st.subheader('Per HSU')
     col1, col2, col3, col4 = st.columns(4)
-    col1.metric('Block, lpm',
+    col1.metric('Blocks, lpm',
                 f"{hsu.performance['leakage']['block']*6e4*2:.2f}")
     col2.metric('Shoes, lpm',
                 f"{hsu.performance['leakage']['shoes']*6e4*2:.2f}")
