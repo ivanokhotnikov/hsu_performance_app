@@ -6,7 +6,7 @@ st.set_page_config(page_title='HSU Performance', page_icon='fav.png')
 
 def main():
     st.title('Modeled HSU Performance')
-    with st.container():
+    with st.sidebar:
         st.header('Inputs')
         oil = st.selectbox('Oil', ('SAE 15W40', 'SAE 5W30', 'SAE 30'))
         oil_temp = st.number_input('Oil temperature', 0, 100, 100, 10)
