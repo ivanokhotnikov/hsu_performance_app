@@ -301,7 +301,13 @@ class HST:
                 'power': power_pump - power_motor
             },
             'charge pressure': pressure_charge,
-            'discharge pressure': pressure_discharge
+            'discharge pressure': pressure_discharge,
+            'leakage': {
+                'block': leak_block,
+                'shoes': leak_shoes,
+                'pistons': leak_pistons,
+                'total': leak_total
+            },
         }
         self.efficiencies = {
             'pump': {
@@ -346,3 +352,9 @@ class HST:
         self.motor_lp = np.floor(self.pistons / 2) * pressure_charge * \
             1e5 * self.sizes['Ap'] / np.cos(np.radians(self.swash)) / 1e3
         self.shaft_torque = self.performance['pump']['torque']
+
+    def compute_control_flow(self):
+        CONTROL_PISTON_DIA = 72.08e-3
+        CONTROL_PISTON_STROKE = 144.26e-3
+        DESTROKE_TIME = 0.8
+        self.control_flow = np.pi * CONTROL_PISTON_DIA**2 / 4 * CONTROL_PISTON_STROKE / 2 * DESTROKE_TIME
