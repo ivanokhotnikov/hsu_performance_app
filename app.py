@@ -32,7 +32,7 @@ def main():
     col1, col2, col3 = st.columns(3)
     col1.metric('Continuous flow, lpm',
                 f"{hsu.performance['leakage']['total']*6e4*2:.2f}")
-    col2.metric('Control flow, lpm', f"{hsu.control_flow*6e4*2:.2f}")
+    col2.metric('Control flow, lpm', f"{hsu.control_flow*6e4:.2f}")
     col3.metric(
         'Transient flow, lpm',
         f"{(hsu.performance['leakage']['total']*2 + hsu.control_flow)*6e4:.2f}"

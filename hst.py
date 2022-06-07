@@ -357,4 +357,4 @@ class HST:
         CONTROL_PISTON_DIA = 72.08e-3
         CONTROL_PISTON_STROKE = 144.26e-3
         DESTROKE_TIME = 0.8
-        self.control_flow = np.pi * CONTROL_PISTON_DIA**2 / 4 * CONTROL_PISTON_STROKE / 2 * DESTROKE_TIME
+        self.control_flow = np.pi * CONTROL_PISTON_DIA**2 / 4 * CONTROL_PISTON_STROKE / 2 / DESTROKE_TIME
