@@ -188,9 +188,9 @@ class HST:
                     Cp=.001,
                     Cm=.005,
                     D=125,
-                    h1=20e-6,
-                    h2=20e-6,
-                    h3=20e-6,
+                    block_cl=20e-6,
+                    slipper_cl=20e-6,
+                    piston_cl=20e-6,
                     eccentricity=1):
         """Defines efficiencies and performance characteristics of the HST made of same-displacement axial-piston machines.
 
@@ -204,8 +204,8 @@ class HST:
             The charge pressure in bar, default 25 bar.
         A, Bp, Bm, Cp, Cm, D: float, optional
             Coefficients in the efficiency model, default A = .17, Bp = 1.0, Bm = .5, Cp = .001, Cm = .005, D = 125.
-        h1, h2, h3: float, optional
-            Clearances in m, default h1 = 15e-6, h2 = 15e-6, h3 = 25e-6.
+        block_cl, slipper_cl, piston_cl: float, optional
+            Clearances in m, default block_cl = 15e-6, slipper_cl = 15e-6, piston_cl = 25e-6.
         eccentricity: float, optional
             Eccentricity ratio of a psiton in a bore, default 1.
 
@@ -217,19 +217,19 @@ class HST:
             'motor': {'volumetric': float, 'mechanical': float, 'total': float},
             'hst': {'volumetric': float, 'mechanical': float, 'total': float}}
         """
-        leak_block = np.pi * h1**3 * (
+        leak_block = np.pi * block_cl**3 * (
             pressure_discharge * np.ceil(self.pistons / 2) + pressure_charge *
             np.floor(self.pistons / 2)) * 1e5 / self.pistons * (
                 1 / np.log(self.sizes['Rbo'] / self.sizes['rbo']) +
                 1 / np.log(self.sizes['Rbi'] / self.sizes['rbi'])
             ) / (6 * self.oil_data.loc[self.oil_temp]['Dyn. Viscosity'] * 1e-3)
-        leak_shoes = self.pistons * np.pi * h2**3 * (
+        leak_shoes = self.pistons * np.pi * slipper_cl**3 * (
             pressure_discharge * np.ceil(self.pistons / 2) + pressure_charge *
             np.floor(self.pistons / 2)) * 1e5 / self.pistons / (
                 6 * self.oil_data.loc[self.oil_temp]['Dyn. Viscosity'] * 1e-3 *
                 np.log(self.sizes['Rs'] / self.sizes['rs']))
         leak_piston = np.array([
-            np.pi * self.sizes['d'] * h3**3 *
+            np.pi * self.sizes['d'] * piston_cl**3 *
             (pressure_discharge * np.ceil(self.pistons / 2) +
              pressure_charge * np.floor(self.pistons / 2)) * 1e5 /
             self.pistons * (1 + 1.5 * eccentricity**3) *

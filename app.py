@@ -2,13 +2,17 @@ import streamlit as st
 
 from hst import HST
 
-st.set_page_config(page_title='HSU Performance', page_icon='https://raw.githubusercontent.com/ivanokhotnikov/hsu_performance_app/master/images/fav.png')
+st.set_page_config(
+    page_title='HSU Performance',
+    page_icon=
+    'https://raw.githubusercontent.com/ivanokhotnikov/hsu_performance_app/master/images/fav.png'
+)
 
 
 def main():
     with st.sidebar:
         st.image(
-            'https://raw.githubusercontent.com/ivanokhotnikov/hsu_performance_app/master/images/lgo.png'
+            'https://raw.githubusercontent.com/ivanokhotnikov/hsu_performance_app/master/images/logo.png'
         )
         st.header('Inputs')
         oil = st.selectbox('Oil', ('SAE 15W40', 'SAE 5W30', 'SAE 30'))
@@ -19,7 +23,19 @@ def main():
         pressure_charge = st.number_input('Charge pressure, bar:', 10, 50, 25)
         pressure_discharge = st.number_input('Discharge pressure, bar:', 40,
                                              1000, 472)
-    hsu.compute_eff(speed_pump, pressure_discharge, pressure_charge)
+        st.header('Clerances')
+        block_cl = st.number_input('Cylinder block, microns', 1, 50, 20, 1)
+        slipper_cl = st.number_input('Slipper, microns', 1, 50, 20, 1)
+        piston_cl = st.number_input('Piston radial, microns', 1, 50, 33)
+        block_cl /= 1e6
+        slipper_cl /= 1e6
+        piston_cl /= 1e6
+    hsu.compute_eff(speed_pump=speed_pump,
+                    pressure_discharge=pressure_discharge,
+                    pressure_charge=pressure_charge,
+                    block_cl=block_cl,
+                    slipper_cl=slipper_cl,
+                    piston_cl=piston_cl)
     hsu.compute_control_flow()
     st.title('Modeled HSU Performance')
     st.header('Pump')
