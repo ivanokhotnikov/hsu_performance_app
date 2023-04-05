@@ -2,13 +2,13 @@ import streamlit as st
 
 from hst import HST
 
-st.set_page_config(page_title='HSU Performance', page_icon='https://raw.githubusercontent.com/ivanokhotnikov/hsu_performance_app/master/images/logo.png')
+st.set_page_config(page_title='HSU Performance', page_icon='https://raw.githubusercontent.com/ivanokhotnikov/hsu_performance_app/master/images/fav.png')
 
 
 def main():
     with st.sidebar:
         st.image(
-            'https://raw.githubusercontent.com/ivanokhotnikov/hsu_performance/master/images/logo.png'
+            'https://raw.githubusercontent.com/ivanokhotnikov/hsu_performance_app/master/images/lgo.png'
         )
         st.header('Inputs')
         oil = st.selectbox('Oil', ('SAE 15W40', 'SAE 5W30', 'SAE 30'))
